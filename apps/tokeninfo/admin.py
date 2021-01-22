@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import TokenInfo, TokeUsage
+from .models import TokenInfo, TokenUsage
 
 
 class TokenInfoAdmin(admin.ModelAdmin):
@@ -15,4 +15,4 @@ class TokeUsageAdmin(admin.ModelAdmin):
 
 
 admin.site.register(TokenInfo, TokenInfoAdmin)
-admin.site.register(TokeUsage, TokeUsageAdmin)
+admin.site.register(TokenUsage, TokeUsageAdmin)
