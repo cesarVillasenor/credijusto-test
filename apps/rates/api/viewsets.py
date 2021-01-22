@@ -6,6 +6,7 @@ from django.conf import settings
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from apps.tokeninfo.models import Token, TokenInfo, TokenUsage
 
 
 class RatesView(APIView):
@@ -15,7 +16,27 @@ class RatesView(APIView):
     DOF_url = 'https://www.dof.gob.mx/indicadores_detalle.php?cod_tipo_indicador=158&dfecha='
     fixer_url = 'http://data.fixer.io/api/latest?symbols=MXN&access_key=' + settings.FIXER_ACCESS_KEY  # + '&base=USD'
 
-    def get_rates(self):
+    def get_rates(self, token=None):
+
+        if token is None:
+            content = {'Error': "No Token Provided"}
+            return content
+
+        if Token.objects.filter(key=token).count() < 1:
+            content = {'Error': "Not Valid Token"}
+            return content
+
+        token_info = TokenInfo.objects.filter(token=token).first()
+        today_date = datetime.now().date()
+        today_token_usage = TokenUsage.objects.filter(token_info=token_info, date=today_date).count()
+
+        if today_token_usage >= token_info.limit_usage:
+            content = {'Error': "Exceeded Daily Limit Usage",
+                       'limit_usage': str(token_info.limit_usage)}
+            return content
+        token_usage = TokenUsage(token_info=token_info, date=today_date)
+        token_usage.save()
+
         content = {'rates': {}}
 
         # Banxico
@@ -55,12 +76,13 @@ class RatesView(APIView):
             },
         }
         content['rates'].update(fixer_dict)
+
         return content
 
     def get(self, request, format=None):
-        content = self.get_rates()
+        content = self.get_rates(token=request.GET.get('token'))
         return Response(content)
 
     def post(self, request, format=None):
-        content = self.get_rates()
+        content = self.get_rates(token=request.GET.get('token'))
         return Response(content)
