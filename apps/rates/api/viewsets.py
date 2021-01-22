@@ -11,11 +11,11 @@ class RatesView(APIView):
     banxico_url = 'https://www.banxico.org.mx/SieAPIRest/service/v1/series/SF43718/datos/oportuno?token='
     banxico_url += settings.BANXICO_TOKEN
 
-    def get(self, request, format=None):
+    def get_rates(self):
         content = {'rates': {
-        }
-        }
 
+        }
+        }
         banxico_request = requests.get(self.banxico_url)
         bmx_content = json.loads(banxico_request.content)
         bmx_data = bmx_content['bmx']['series'][0]['datos']
@@ -27,5 +27,13 @@ class RatesView(APIView):
         }
         content['rates'].update(bmx_dict)
 
+        return content
+
+    def get(self, request, format=None):
+        content = self.get_rates()
+        return Response(content)
+
+    def post(self, request, format=None):
+        content = self.get_rates()
         return Response(content)
 
