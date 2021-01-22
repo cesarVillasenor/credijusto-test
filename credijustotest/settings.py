@@ -28,8 +28,10 @@ INSTALLED_APPS = [
     'markdown',
     'django_filters',
     'rest_framework',
+    'rest_framework.authtoken',
     # Project apps #
-    'apps.rates'
+    'apps.rates',
+    'apps.tokeninfo'
 ]
 
 MIDDLEWARE = [
@@ -104,6 +106,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
 
 #################
 # LOCAL SETTINGS #credijustotest
