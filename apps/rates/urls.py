@@ -1,7 +1,7 @@
 from django.urls import path
-from .api.viewsets import UserCountView
+from .api.viewsets import RatesView
 
 urlpatterns = [
-    path('api/', UserCountView.as_view()),
+    path('api/', RatesView.as_view()),
 ]
 
