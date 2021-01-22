@@ -11,7 +11,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 DEBUG = ''
 BANXICO_TOKEN = ''
-FIXER_TOKEN = ''
+FIXER_ACCESS_KEY = ''
 
 # Application definition
 
@@ -88,7 +88,7 @@ REST_FRAMEWORK = {
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
-
+FIXER_ACCESS_KEY
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
