@@ -1,0 +1,17 @@
+/.env
+*.pyc
+*.pyo
+*.db
+.DS_Store
+.coverage
+.idea
+.venv
+# Heroku conf #
+Procfile
+requirements.txt
+runtime.txt
+credijustotest/heroku_settings.py
+###########
+deploy/
+media/
+local_settings.py
