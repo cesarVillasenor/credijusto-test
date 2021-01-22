@@ -13,6 +13,7 @@ class RatesView(APIView):
     banxico_url = 'https://www.banxico.org.mx/SieAPIRest/service/v1/series/SF43718/datos/oportuno?token='
     banxico_url += settings.BANXICO_TOKEN
     DOF_url = 'https://www.dof.gob.mx/indicadores_detalle.php?cod_tipo_indicador=158&dfecha='
+    fixer_url = 'http://data.fixer.io/api/latest?symbols=MXN&access_key=' + settings.FIXER_ACCESS_KEY  # + '&base=USD'
 
     def get_rates(self):
         content = {'rates': {}}
@@ -42,6 +43,18 @@ class RatesView(APIView):
             }
         }
         content['rates'].update(DOF_dict)
+
+        # Fixer
+        fixer_request = requests.get(self.fixer_url)
+        fixer_data = json.loads(fixer_request.content)
+        fixer_date = fixer_data['date']
+        fixer_dict = {
+            'Fixer': {
+                'value': str(fixer_data['rates']['MXN'])[:-2],
+                'last_updated': fixer_date[8:10] + fixer_date[4:8] + fixer_date[0:4]
+            },
+        }
+        content['rates'].update(fixer_dict)
         return content
 
     def get(self, request, format=None):
