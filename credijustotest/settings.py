@@ -115,7 +115,7 @@ STATICFILES_DIRS = [
 # LOCAL SETTINGS #credijustotest
 ##################
 
-f = os.path.join(BASE_DIR, "credijustotest/local_settings.py")
+f = os.path.join(BASE_DIR, "credijustotest/heroku_settings.py")
 if os.path.exists(f):
     import sys
     import imp
