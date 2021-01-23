@@ -8,10 +8,6 @@
 .idea
 .venv
 # Heroku conf #
-Procfile
-requirements.txt
-runtime.txt
-credijustotest/heroku_settings.py
 ###########
 deploy/
 media/
