@@ -13,7 +13,7 @@ MIDDLEWARE = [
 #  Add configuration for static files storage using whitenoise
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-DEBUG = False
+DEBUG = True
 
 SECRET_KEY = '58nbbt9+yr_@jiq$q*lshgam=un*)-e)*5++zli_idts4tjv7b'
 NEVERCACHE_KEY = "#ao%db)h2ug&a$kesg_rc@1qe@ckw4z8ksu=2zu&f!(6)1l--&"
